@@ -1,0 +1,35 @@
+
+@protocol = http
+@hostname = localhost
+@port = 8080
+@host = {{protocol}}://{{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+
+# User
+POST {{host}}/user/registro 
+Content-Type: application/json
+
+{
+    "email": "eportillovirreira@gmail.com",
+    "password": "12345678"
+}
+
+###
+POST {{host}}/user/login
+Content-Type: application/json
+
+{
+    "email": "eportillovirreira@gmail.com",
+    "password": "12345678"
+}
+
+###
+POST {{host}}/user/all
+Content-Type: application/json
+
+###
+POST {{host}}/user/get/874e3252-de52-4007-b992-8fdffd01daaf
+Content-Type: application/json
