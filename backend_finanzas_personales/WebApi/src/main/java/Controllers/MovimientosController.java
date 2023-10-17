@@ -1,8 +1,10 @@
 package Controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import Dto.MovimientoDto;
+import Fourteam.http.annotation.DeleteMapping;
 import Fourteam.http.annotation.GetMapping;
 import Fourteam.http.annotation.PathVariable;
 import Fourteam.http.annotation.PostMapping;
@@ -14,6 +16,7 @@ import Fourteam.http.annotation.RestController;
 import Fourteam.mediator.Mediator;
 import UseCases.Command.Movimiento.Create.CreateMovimientoCommand;
 import UseCases.Command.Movimiento.Edit.EditMovimientoCommand;
+import UseCases.Command.Movimiento.Eliminar.EliminarMovimientoCommand;
 import UseCases.Queries.Movimiento.GetByKey.GetMovimientoByKeyQuery;
 import UseCases.Queries.Movimiento.GetMovimientoByCuenta.GetMovimientoByCuentaQuery;
 
@@ -47,6 +50,14 @@ public class MovimientosController {
         return (String) _mediator.send(request).data;
     }
 
+    @DeleteMapping("/{key}")
+    public UUID delete(
+            @PathVariable EliminarMovimientoCommand request,
+            @RequestHeader(value = "Authorization", required = true) String auth) throws Exception {
+        request.token = auth;
+        return (UUID) _mediator.send(request).data;
+    }
+
     // Querys
     @GetMapping("/getbykey/{key}")
     public MovimientoDto getByKey(
@@ -63,5 +74,4 @@ public class MovimientosController {
         request.token = auth;
         return (List<MovimientoDto>) _mediator.send(request).data;
     }
-
 }

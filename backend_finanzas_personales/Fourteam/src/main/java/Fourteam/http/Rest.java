@@ -62,37 +62,49 @@ public abstract class Rest {
 
   private static void RestHandler(HttpExchange t) throws IOException {
 
-    t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-    if (t.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-      t.getResponseHeaders().add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-      t.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
-      t.sendResponseHeaders(200, 0);
-      return;
-    }
-    System.out.println(t.getRequestMethod());
-    Response response = new Response();
-    StringBuilder sb = new StringBuilder();
-    try {
-      InputStream ios = t.getRequestBody();
-      int i;
-      while ((i = ios.read()) != -1) {
-        sb.append((char) i);
+    new Thread() {
+      @Override
+      public void run() {
+        super.run();
+        try {
+          t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+          if (t.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+            t.getResponseHeaders().add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+            t.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
+            t.sendResponseHeaders(200, 0);
+            OutputStream os = t.getResponseBody();
+            os.close();
+            return;
+          }
+          System.out.println(t.getRequestMethod());
+          Response response = new Response();
+          StringBuilder sb = new StringBuilder();
+          try {
+            InputStream ios = t.getRequestBody();
+            int i;
+            while ((i = ios.read()) != -1) {
+              sb.append((char) i);
+            }
+            String data = sb.toString();
+            onMessage(t, data, response);
+
+            ByteBuffer buffer = Charset.forName("UTF-8").encode(response.toString());
+            byte[] bytes = new byte[buffer.remaining()];
+            buffer.get(bytes);
+            t.sendResponseHeaders(response.getCode(), bytes.length);
+            OutputStream os = t.getResponseBody();
+            os.write(bytes);
+            os.close();
+
+          } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+          }
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
-      String data = sb.toString();
-      onMessage(t, data, response);
-
-      ByteBuffer buffer = Charset.forName("UTF-8").encode(response.toString());
-      byte[] bytes = new byte[buffer.remaining()];
-      buffer.get(bytes);
-      t.sendResponseHeaders(response.getCode(), bytes.length);
-      OutputStream os = t.getResponseBody();
-      os.write(bytes);
-      os.close();
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      // TODO: handle exception
-    }
+    }.start();
 
   }
 

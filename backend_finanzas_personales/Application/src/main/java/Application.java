@@ -26,6 +26,7 @@ import UseCases.Command.Cuenta.Eliminar.EliminarCuentahandler;
 import UseCases.Command.Cuenta.Retirar.RetirarMontoCuentaHandler;
 import UseCases.Command.Movimiento.Create.CreateMovimientoHandler;
 import UseCases.Command.Movimiento.Edit.EditMovimientoHandler;
+import UseCases.Command.Movimiento.Eliminar.EliminarMovimientoHandler;
 import UseCases.Command.User.Create.CrearUserHandler;
 import UseCases.Command.User.Edit.EditUserHandler;
 import UseCases.DomainEventHandler.Cuenta.AddMovimientoEventWhenCuentaCreada;
@@ -66,6 +67,7 @@ public class Application {
     IMediator.registerHandler(CreateMovimientoHandler.class);
     IMediator.registerHandler(EditMovimientoHandler.class);
     IMediator.registerHandler(GetMovimientoByCuentaHandler.class);
+    IMediator.registerHandler(EliminarMovimientoHandler.class);
 
     // Categoria Cuenta
     IMediator.registerHandler(CrearCategoriaCuentaHandler.class);

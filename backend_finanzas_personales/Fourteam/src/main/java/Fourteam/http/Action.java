@@ -130,7 +130,7 @@ public class Action {
     // Class[] paramTypes = this.method.getParameterTypes();
     ArrayList<Object> values = new ArrayList<Object>();
     int i_p_v = -1;
-
+        System.out.println("Peticion ...");
     String[] arrp = this.route.split("/");
     ArrayList<String> lis = new ArrayList<>();
     for (String s : arrp) {
@@ -202,12 +202,18 @@ public class Action {
     if (resp instanceof Fourteam.mediator.Response) {
       Fourteam.mediator.Response r = (Fourteam.mediator.Response) resp;
       r.status = response.getCode();
+      System.out.println("Respuesta ...");
+
       response.setBody(r.toString());
     } else {
       if(resp instanceof String || resp instanceof Integer || resp instanceof Double || resp instanceof Boolean || resp instanceof Float || resp instanceof Long || resp instanceof Byte || resp instanceof Short || resp instanceof Character){
+              System.out.println("Respuesta ...");
+
           response.setBody(resp+"");
           return;
       }
+            System.out.println("Respuesta ...");
+
       response.setBody(JSON.getInstance().toJson(resp)+"");
     }
   }
