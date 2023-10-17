@@ -8,7 +8,7 @@ public class Monto extends ValueObject {
     double monto;
 
     public Monto(double monto) {
-        this.validateMontoNotCero(monto);
+        // this.validateMontoNotCero(monto);
         this.monto = monto;
     }
 
@@ -18,7 +18,8 @@ public class Monto extends ValueObject {
         try {
             doubleMonto = Double.parseDouble(monto);
 
-            this.validateMontoNotCero(doubleMonto);
+            // @VALIDACIÓN_NO_MONTO_NEGATIVO
+            // this.validateMontoNotCero(doubleMonto);
 
             this.monto = doubleMonto;
         } catch (NumberFormatException e) {
@@ -27,12 +28,14 @@ public class Monto extends ValueObject {
     }
 
     public void sumar(double monto) {
-        validateMontoNotCero(monto);
+        // @VALIDACIÓN_NO_MONTO_NEGATIVO
+        // validateMontoNotCero(monto);
         this.monto += monto;
     }
 
     public void restar(double monto) {
-        validateMontoNotCero(monto);
+        // @VALIDACIÓN_NO_MONTO_NEGATIVO
+        // validateMontoNotCero(monto);
         this.monto -= monto;
     }
 
@@ -40,10 +43,11 @@ public class Monto extends ValueObject {
         return monto;
     }
 
-    private void validateMontoNotCero(double monto) {
-        if (monto < 0) {
-            throw new IllegalArgumentException("El monto no puede ser negativo");
-        }
-    }
+    // @VALIDACIÓN_NO_MONTO_NEGATIVO
+    // private void validateMontoNotCero(double monto) {
+    //     if (monto < 0) {
+    //         throw new IllegalArgumentException("El monto no puede ser negativo");
+    //     }
+    // }
 
 }

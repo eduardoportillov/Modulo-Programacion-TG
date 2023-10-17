@@ -13,7 +13,7 @@ import UseCases.Command.Cuenta.AddMonto.AddMontoCuentaCommand;
 import UseCases.Command.Cuenta.Create.CrearCuentaCommand;
 import UseCases.Command.Cuenta.Edit.EditCuentaCommand;
 import UseCases.Command.Cuenta.Eliminar.EliminarCuentaCommand;
-import UseCases.Command.Cuenta.Retirar.RetirarMontoCuentaCommand;
+import UseCases.Command.Cuenta.RetirarMonto.RetirarMontoCuentaCommand;
 import UseCases.Queries.Cuenta.GetAll.GetAllCuentaQuery;
 import UseCases.Queries.Cuenta.GetByKey.GetCuentaByKeyQuery;
 import UseCases.Queries.Cuenta.GetByToken.GetCuentasByTokenQuery;

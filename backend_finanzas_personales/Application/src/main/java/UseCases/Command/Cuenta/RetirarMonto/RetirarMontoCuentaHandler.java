@@ -1,4 +1,4 @@
-package UseCases.Command.Cuenta.Retirar;
+package UseCases.Command.Cuenta.RetirarMonto;
 
 import java.time.LocalDateTime;
 
@@ -47,22 +47,29 @@ public class RetirarMontoCuentaHandler implements RequestHandler<RetirarMontoCue
 
             user = _userRepository.FindByKey(user.key);
 
+            // @VALIDACIÓN_NO_MONTO_NEGATIVO
+            // if(cuenta.getMonto().getMonto() < request.data.monto){
+            //     throw new HttpException(HttpStatus.BAD_REQUEST, "No se puede retirar mas de lo que hay en la cuenta");
+            // }
+
+            double monto = request.data.monto * -1;
+
             Movimiento movimiento = _movimientoFactory.Create(
                     cuenta.key,
                     null,
-                    "Monto añadido a la cuenta",
+                    "Monto retirado de la cuenta",
                     user.categoriaMovimientoUser.get(0).key,
-                    request.data.monto,
+                    monto,
                     LocalDateTime.now());
             _movimientoRepository.Create(movimiento);
 
-            cuenta.addMonto(request.data.monto);
+            cuenta.restarMonto(request.data.monto);
             _cuentaRepository.Update(cuenta);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
 
-        return "Movimiento Creado con exito al añadir monto a la cuenta";
+        return "Movimiento Creado con exito al retirar monto a la cuenta";
     }
 
 }

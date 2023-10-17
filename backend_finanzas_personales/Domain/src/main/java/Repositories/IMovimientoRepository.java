@@ -15,4 +15,5 @@ public interface IMovimientoRepository extends IRepository<Movimiento, UUID> {
 
     public List<Movimiento> GetByCuenta(UUID keyCuenta) throws Exception;
 
+    public List<Movimiento> GetByUser(UUID keyUser) throws Exception;
 }

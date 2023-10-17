@@ -23,7 +23,7 @@ import UseCases.Command.Cuenta.AddMonto.AddMontoCuentaHandler;
 import UseCases.Command.Cuenta.Create.CrearCuentaHandler;
 import UseCases.Command.Cuenta.Edit.EditCuentaHandler;
 import UseCases.Command.Cuenta.Eliminar.EliminarCuentahandler;
-import UseCases.Command.Cuenta.Retirar.RetirarMontoCuentaHandler;
+import UseCases.Command.Cuenta.RetirarMonto.RetirarMontoCuentaHandler;
 import UseCases.Command.Movimiento.Create.CreateMovimientoHandler;
 import UseCases.Command.Movimiento.Edit.EditMovimientoHandler;
 import UseCases.Command.Movimiento.Eliminar.EliminarMovimientoHandler;
@@ -40,6 +40,7 @@ import UseCases.Queries.Cuenta.GetByKey.GetCuentaByKeyHandler;
 import UseCases.Queries.Cuenta.GetByToken.GetCuentasByToken;
 import UseCases.Queries.Movimiento.GetByKey.GetMovimientoByKeyHandler;
 import UseCases.Queries.Movimiento.GetMovimientoByCuenta.GetMovimientoByCuentaHandler;
+import UseCases.Queries.Movimiento.GetMovimientoByUser.GetMovimientoByUserHandler;
 import UseCases.Queries.User.FindByKey.FindUserByKeyHandler;
 import UseCases.Queries.User.GetAll.GetAllUserHandler;
 import UseCases.Queries.User.Login.LoginUserHandler;
@@ -67,6 +68,7 @@ public class Application {
     IMediator.registerHandler(CreateMovimientoHandler.class);
     IMediator.registerHandler(EditMovimientoHandler.class);
     IMediator.registerHandler(GetMovimientoByCuentaHandler.class);
+    IMediator.registerHandler(GetMovimientoByUserHandler.class);
     IMediator.registerHandler(EliminarMovimientoHandler.class);
 
     // Categoria Cuenta

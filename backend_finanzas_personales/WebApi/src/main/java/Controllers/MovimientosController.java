@@ -19,6 +19,7 @@ import UseCases.Command.Movimiento.Edit.EditMovimientoCommand;
 import UseCases.Command.Movimiento.Eliminar.EliminarMovimientoCommand;
 import UseCases.Queries.Movimiento.GetByKey.GetMovimientoByKeyQuery;
 import UseCases.Queries.Movimiento.GetMovimientoByCuenta.GetMovimientoByCuentaQuery;
+import UseCases.Queries.Movimiento.GetMovimientoByUser.GetMovimientoByUserQuery;
 
 @RestController
 @RequestMapping("/movimiento")
@@ -70,6 +71,14 @@ public class MovimientosController {
     @GetMapping("/getbycuenta/{key}")
     public List<MovimientoDto> getByCuenta(
             @PathVariable GetMovimientoByCuentaQuery request,
+            @RequestHeader(value = "Authorization", required = true) String auth) throws Exception {
+        request.token = auth;
+        return (List<MovimientoDto>) _mediator.send(request).data;
+    }
+
+    @GetMapping("/getbyuser/{key}")
+    public List<MovimientoDto> getByUser(
+            @PathVariable GetMovimientoByUserQuery request,
             @RequestHeader(value = "Authorization", required = true) String auth) throws Exception {
         request.token = auth;
         return (List<MovimientoDto>) _mediator.send(request).data;

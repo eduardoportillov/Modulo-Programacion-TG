@@ -1,4 +1,4 @@
-package UseCases.Command.Cuenta.Retirar;
+package UseCases.Command.Cuenta.RetirarMonto;
 
 import Dto.CuentaDto;
 import Fourteam.mediator.Request;

@@ -30,9 +30,10 @@ public class Cuenta extends AggregateRoot<UUID> {
 
     public void restarMonto(double monto) {
 
-        if (this.monto.getMonto() < monto) {
-            throw new IllegalArgumentException("No hay saldo suficiente, para restar saldo");
-        }
+        // @VALIDACIÓN_NO_MONTO_NEGATIVO
+        // if (this.monto.getMonto() < monto) {
+        //     throw new IllegalArgumentException("No hay saldo suficiente, para restar saldo");
+        // }
 
         this.monto.restar(monto);
     }
