@@ -3,7 +3,7 @@ package Factories.Movimiento;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import Entities.Cuenta.Movimiento;
+import Entities.Movimiento.Movimiento;
 
 public class MovimientoFactory implements IMovimientoFactory {
 

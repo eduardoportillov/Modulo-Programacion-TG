@@ -1,4 +1,4 @@
-package Entities.Cuenta;
+package Entities.Movimiento;
 
 import java.util.UUID;
 

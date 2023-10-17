@@ -1,6 +1,6 @@
 package Factories.CategoriaMovimiento;
 
-import Entities.Cuenta.CategoriaMovimiento;
+import Entities.Movimiento.CategoriaMovimiento;
 
 public class CategoriaMovimientoFactory implements ICategoriaMovimientoFactory{
 

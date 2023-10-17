@@ -2,7 +2,7 @@ package UseCases.Command.CategoriaMovimiento.EditCategoriaMovimientoUser;
 
 import Entities.User;
 import Entities.Cuenta.CategoriaCuenta;
-import Entities.Cuenta.CategoriaMovimiento;
+import Entities.Movimiento.CategoriaMovimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;

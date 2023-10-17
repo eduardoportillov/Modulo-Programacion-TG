@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import Context.IWriteDbContext;
-import Entities.Cuenta.Movimiento;
+import Entities.Movimiento.Movimiento;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
 import Repositories.IMovimientoRepository;

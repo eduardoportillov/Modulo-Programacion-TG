@@ -4,7 +4,7 @@ import Dto.CuentaDto;
 import Dto.MovimientoDto;
 import Entities.User;
 import Entities.Cuenta.Cuenta;
-import Entities.Cuenta.Movimiento;
+import Entities.Movimiento.Movimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;

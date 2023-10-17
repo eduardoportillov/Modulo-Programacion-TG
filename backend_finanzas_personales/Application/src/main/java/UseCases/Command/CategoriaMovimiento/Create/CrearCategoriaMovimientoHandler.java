@@ -3,7 +3,7 @@ package UseCases.Command.CategoriaMovimiento.Create;
 import java.util.Arrays;
 import java.util.List;
 
-import Entities.Cuenta.CategoriaMovimiento;
+import Entities.Movimiento.CategoriaMovimiento;
 import Factories.CategoriaMovimiento.ICategoriaMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;

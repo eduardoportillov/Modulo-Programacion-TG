@@ -2,9 +2,9 @@ package Context;
 
 import Entities.User;
 import Entities.Cuenta.CategoriaCuenta;
-import Entities.Cuenta.CategoriaMovimiento;
 import Entities.Cuenta.Cuenta;
-import Entities.Cuenta.Movimiento;
+import Entities.Movimiento.CategoriaMovimiento;
+import Entities.Movimiento.Movimiento;
 import Fourteam.db.DbContext;
 import Fourteam.db.DbSet;
 import Fourteam.db.Exception.DataBaseException;

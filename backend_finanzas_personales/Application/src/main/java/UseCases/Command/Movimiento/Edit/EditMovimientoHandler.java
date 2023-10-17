@@ -2,8 +2,8 @@ package UseCases.Command.Movimiento.Edit;
 
 import Entities.User;
 import Entities.Cuenta.Cuenta;
-import Entities.Cuenta.Movimiento;
-import Entities.Cuenta.ValueObject.Monto;
+import Entities.Movimiento.Movimiento;
+import Entities.ValueObject.Monto;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;

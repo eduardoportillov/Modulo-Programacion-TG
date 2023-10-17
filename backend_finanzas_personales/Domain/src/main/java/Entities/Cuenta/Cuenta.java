@@ -3,7 +3,7 @@ package Entities.Cuenta;
 import java.util.UUID;
 
 import DomainEvents.CuentaCreada;
-import Entities.Cuenta.ValueObject.Monto;
+import Entities.ValueObject.Monto;
 import core.AggregateRoot;
 
 public class Cuenta extends AggregateRoot<UUID> {

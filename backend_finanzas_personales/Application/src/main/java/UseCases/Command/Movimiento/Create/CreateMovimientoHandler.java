@@ -3,7 +3,7 @@ package UseCases.Command.Movimiento.Create;
 import java.time.LocalDateTime;
 import Entities.User;
 import Entities.Cuenta.Cuenta;
-import Entities.Cuenta.Movimiento;
+import Entities.Movimiento.Movimiento;
 import Factories.Movimiento.IMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;

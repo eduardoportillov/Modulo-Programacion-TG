@@ -1,12 +1,12 @@
-package Entities.Cuenta;
+package Entities.Movimiento;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import Entities.Cuenta.ValueObject.Monto;
-import core.Entity;
+import Entities.ValueObject.Monto;
+import core.AggregateRoot;
 
-public class Movimiento extends Entity<UUID> {
+public class Movimiento extends AggregateRoot<UUID> {
     public UUID keyCuentaOrigen;
     public UUID keyCuentaDestino;
     public String descripcion;

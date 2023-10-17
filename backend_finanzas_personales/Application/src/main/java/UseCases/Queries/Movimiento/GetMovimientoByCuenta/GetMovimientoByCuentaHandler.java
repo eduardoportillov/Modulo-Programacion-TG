@@ -5,7 +5,7 @@ import java.util.List;
 
 import Dto.MovimientoDto;
 import Entities.User;
-import Entities.Cuenta.Movimiento;
+import Entities.Movimiento.Movimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;

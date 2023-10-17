@@ -3,7 +3,7 @@ package UseCases.Command.CategoriaMovimiento.CreateCategoriaMovimientoUser;
 import Dto.CategoriaCuentaDto;
 import Dto.CategoriaMovimientoDto;
 import Entities.User;
-import Entities.Cuenta.CategoriaMovimiento;
+import Entities.Movimiento.CategoriaMovimiento;
 import Factories.CategoriaMovimiento.ICategoriaMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;

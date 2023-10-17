@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import DomainEvents.UserCreado;
 import Entities.Cuenta.CategoriaCuenta;
-import Entities.Cuenta.CategoriaMovimiento;
+import Entities.Movimiento.CategoriaMovimiento;
 import Rule.EmailRule;
 import Rule.StringNotNullOrEmptyRule;
 import core.AggregateRoot;
