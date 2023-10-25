@@ -2,7 +2,7 @@ package Factories.CategoriaMovimiento;
 
 import java.util.UUID;
 
-import Entities.CategoriaMovimiento;
+import Model.CategoriaMovimiento;
 
 public class CategoriaMovimientoFactory implements ICategoriaMovimientoFactory{
 

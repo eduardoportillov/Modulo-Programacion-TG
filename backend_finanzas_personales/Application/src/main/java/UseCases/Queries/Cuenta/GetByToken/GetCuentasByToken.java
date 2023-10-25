@@ -3,10 +3,10 @@ package UseCases.Queries.Cuenta.GetByToken;
 import java.util.List;
 import java.util.UUID;
 
-import Entities.Cuenta;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.Cuenta;
 import Repositories.ICuentaRepository;
 import Repositories.ISecurityUtils;
 

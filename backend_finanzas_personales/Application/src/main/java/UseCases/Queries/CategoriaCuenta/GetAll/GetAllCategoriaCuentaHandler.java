@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dto.CategoriaCuentaDto;
-import Entities.CategoriaCuenta;
 import Fourteam.mediator.RequestHandler;
+import Model.CategoriaCuenta;
 import Repositories.ICategoriaCuentaRepository;
 
 public class GetAllCategoriaCuentaHandler implements RequestHandler<GetAllCategoriaCuentaQuery, List<CategoriaCuentaDto>> {

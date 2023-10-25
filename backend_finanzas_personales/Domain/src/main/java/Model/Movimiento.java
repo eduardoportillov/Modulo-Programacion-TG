@@ -1,11 +1,13 @@
-package Entities;
+package Model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import DomainEvents.Movimiento.MovimientoCreado;
+import DomainEvents.Movimiento.MovimientoDelete;
 import DomainEvents.Movimiento.MovimientoEditado;
-import Entities.ValueObject.Monto;
+import Fourteam.console.console;
+import Model.ValueObject.Monto;
 import core.AggregateRoot;
 
 public class Movimiento extends AggregateRoot<UUID> {
@@ -18,7 +20,7 @@ public class Movimiento extends AggregateRoot<UUID> {
 
     public Movimiento(UUID keyCuentaOrigen, UUID keyCuentaDestino, String descripcion, UUID keyCategoria, double monto,
             LocalDateTime fecha) {
-                super();
+        super();
         key = UUID.randomUUID();
         this.keyCuentaOrigen = keyCuentaOrigen;
         this.keyCuentaDestino = keyCuentaDestino;
@@ -28,12 +30,16 @@ public class Movimiento extends AggregateRoot<UUID> {
         this.fecha = fecha;
     }
 
-    public void evenCreado(UUID keyUser, UUID keyCuentaOrigen, UUID keyCuentaDestino, double monto){
+    public void evenCreado(UUID keyUser, UUID keyCuentaOrigen, UUID keyCuentaDestino, double monto) {
         addDomainEvent(new MovimientoCreado(keyUser, keyCuentaOrigen, keyCuentaDestino, monto));
     }
 
-    public void eventEdit(UUID keyMovimientodouble, double montoAntiguo, double montoNuevo){
-        addDomainEvent(new MovimientoEditado(keyMovimientodouble, montoAntiguo, montoNuevo));
+    public void eventEdit(UUID keyMovimiento, double montoAntiguo, double montoNuevo) {
+        addDomainEvent(new MovimientoEditado(keyMovimiento, montoAntiguo, montoNuevo));
+    }
+
+    public void eventDelete(UUID keyCuentaOrigen, UUID keyCuentaDestino,double monto) {
+        addDomainEvent(new MovimientoDelete(keyCuentaOrigen, keyCuentaDestino, monto));
     }
 
     public String getDescripcion() {
@@ -83,7 +89,5 @@ public class Movimiento extends AggregateRoot<UUID> {
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
-
-    
 
 }

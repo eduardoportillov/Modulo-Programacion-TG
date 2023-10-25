@@ -1,11 +1,9 @@
 package UseCases.DomainEventHandler.Movimiento;
 
 import DomainEvents.Movimiento.MovimientoCreado;
-import Entities.Cuenta;
 import Fourteam.console.console;
-import Fourteam.http.HttpStatus;
-import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.NotificationHandler;
+import Model.Cuenta;
 import Repositories.ICuentaRepository;
 import core.ConfirmedDomainEvent;
 

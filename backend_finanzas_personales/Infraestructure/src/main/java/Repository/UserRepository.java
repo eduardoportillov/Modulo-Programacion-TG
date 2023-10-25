@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import Context.IWriteDbContext;
-import Entities.User;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
+import Model.User;
 import Repositories.IUserRepository;
 
 public class UserRepository implements IUserRepository {
@@ -42,7 +42,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User Delete(User user) throws Exception {
-        dbSet.Delete(equalKey(user.key));
+        dbSet.Delete(user, equalKey(user.key));
         return user;
     }
 

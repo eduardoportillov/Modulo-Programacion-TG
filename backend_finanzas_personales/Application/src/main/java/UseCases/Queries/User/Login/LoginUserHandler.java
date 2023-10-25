@@ -1,12 +1,12 @@
 package UseCases.Queries.User.Login;
 
-import Entities.User;
 import Repositories.ISecurityUtils;
 import Repositories.IUserRepository;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.User;
 
 public class LoginUserHandler implements RequestHandler<LoginUserQuery, String> {
 

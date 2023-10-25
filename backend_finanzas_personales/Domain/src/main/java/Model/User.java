@@ -1,4 +1,4 @@
-package Entities;
+package Model;
 
 import java.util.UUID;
 import DomainEvents.User.UserCreado;
@@ -22,8 +22,8 @@ public class User extends AggregateRoot<UUID> {
         this.password = password;
     }
 
-    public void eventCreado(UUID keyUser) {
-        addDomainEvent(new UserCreado(keyUser));
+    public void eventCreado() {
+        addDomainEvent(new UserCreado(this.key));
     }
 
     public String getEmail() {

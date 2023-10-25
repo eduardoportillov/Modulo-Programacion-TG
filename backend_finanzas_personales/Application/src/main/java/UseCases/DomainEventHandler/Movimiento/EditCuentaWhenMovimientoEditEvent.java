@@ -1,10 +1,10 @@
 package UseCases.DomainEventHandler.Movimiento;
 
 import DomainEvents.Movimiento.MovimientoEditado;
-import Entities.Cuenta;
-import Entities.Movimiento;
 import Fourteam.console.console;
 import Fourteam.mediator.NotificationHandler;
+import Model.Cuenta;
+import Model.Movimiento;
 import Repositories.ICuentaRepository;
 import Repositories.IMovimientoRepository;
 import core.ConfirmedDomainEvent;

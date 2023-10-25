@@ -2,7 +2,7 @@ package Dto;
 
 import java.util.UUID;
 
-import Entities.CategoriaMovimiento;
+import Model.CategoriaMovimiento;
 
 public class CategoriaMovimientoDto {
     public UUID key;

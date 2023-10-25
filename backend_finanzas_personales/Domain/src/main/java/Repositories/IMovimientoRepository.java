@@ -3,7 +3,7 @@ package Repositories;
 import java.util.List;
 import java.util.UUID;
 
-import Entities.Movimiento;
+import Model.Movimiento;
 import core.IRepository;
 
 public interface IMovimientoRepository extends IRepository<Movimiento, UUID> {

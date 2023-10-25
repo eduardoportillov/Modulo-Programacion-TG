@@ -3,7 +3,7 @@ package Dto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import Entities.Movimiento;
+import Model.Movimiento;
 
 public class MovimientoDto {
     public UUID key;

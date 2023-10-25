@@ -2,7 +2,7 @@ package Dto;
 
 import java.util.UUID;
 
-import Entities.User;
+import Model.User;
 
 public class UserDto {
   public UUID key;

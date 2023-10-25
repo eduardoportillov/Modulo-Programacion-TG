@@ -3,11 +3,11 @@ package UseCases.Command.Movimiento.Create;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import Entities.Movimiento;
 import Factories.Movimiento.IMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.Movimiento;
 import Repositories.ICategoriaMovimientoRepository;
 import Repositories.IMovimientoRepository;
 import Repositories.ISecurityUtils;

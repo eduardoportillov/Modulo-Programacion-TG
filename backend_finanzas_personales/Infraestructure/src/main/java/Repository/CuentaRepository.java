@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import Context.IWriteDbContext;
-import Entities.Cuenta;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
+import Model.Cuenta;
 import Repositories.ICuentaRepository;
 
 public class CuentaRepository implements ICuentaRepository {
@@ -33,7 +33,7 @@ public class CuentaRepository implements ICuentaRepository {
 
     @Override
     public Cuenta Delete(Cuenta cuenta) throws Exception {
-        dbSet.Delete(equalKey(cuenta.key));
+        dbSet.Delete(cuenta, equalKey(cuenta.key));
         return cuenta;
     }
 

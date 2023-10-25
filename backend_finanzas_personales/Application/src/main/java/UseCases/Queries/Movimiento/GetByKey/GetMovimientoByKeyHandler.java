@@ -1,10 +1,10 @@
 package UseCases.Queries.Movimiento.GetByKey;
 
 import Dto.MovimientoDto;
-import Entities.Movimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.Movimiento;
 import Repositories.IMovimientoRepository;
 import Repositories.ISecurityUtils;
 

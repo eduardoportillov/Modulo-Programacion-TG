@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import Context.IWriteDbContext;
-import Entities.Cuenta;
-import Entities.Movimiento;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
+import Model.Cuenta;
+import Model.Movimiento;
 import Repositories.IMovimientoRepository;
 
 public class MovimientoRepository implements IMovimientoRepository {
@@ -36,7 +36,7 @@ public class MovimientoRepository implements IMovimientoRepository {
 
     @Override
     public Movimiento Delete(Movimiento movimiento) throws Exception {
-        dbSet.Delete(equalKey(movimiento.key));
+        dbSet.Delete(movimiento, equalKey(movimiento.key));
         return movimiento;
     }
 

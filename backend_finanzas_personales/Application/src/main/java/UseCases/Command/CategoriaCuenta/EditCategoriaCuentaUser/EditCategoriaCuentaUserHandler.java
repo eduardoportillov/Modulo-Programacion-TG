@@ -2,10 +2,10 @@ package UseCases.Command.CategoriaCuenta.EditCategoriaCuentaUser;
 
 import java.util.UUID;
 
-import Entities.CategoriaCuenta;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.CategoriaCuenta;
 import Repositories.ICategoriaCuentaRepository;
 import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;

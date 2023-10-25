@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.UUID;
 
 import Context.IWriteDbContext;
-import Entities.CategoriaMovimiento;
-import Entities.Cuenta;
-import Entities.Movimiento;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
+import Model.CategoriaMovimiento;
+import Model.Cuenta;
+import Model.Movimiento;
 import Repositories.ICategoriaMovimientoRepository;
 
 public class CategoriaMovimientoRepository implements ICategoriaMovimientoRepository {
@@ -45,7 +45,7 @@ public class CategoriaMovimientoRepository implements ICategoriaMovimientoReposi
 
     @Override
     public CategoriaMovimiento Delete(CategoriaMovimiento CategoriaMovimiento) throws Exception {
-        dbSet.Delete(equalKey(CategoriaMovimiento.key));
+        dbSet.Delete(CategoriaMovimiento, equalKey(CategoriaMovimiento.key));
         return CategoriaMovimiento;
     }
 

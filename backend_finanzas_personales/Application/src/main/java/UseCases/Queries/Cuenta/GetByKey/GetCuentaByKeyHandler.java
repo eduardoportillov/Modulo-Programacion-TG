@@ -1,11 +1,11 @@
 package UseCases.Queries.Cuenta.GetByKey;
 
 import Dto.CuentaDto;
-import Entities.Cuenta;
-import Entities.User;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.Cuenta;
+import Model.User;
 import Repositories.ICuentaRepository;
 import Repositories.ISecurityUtils;
 

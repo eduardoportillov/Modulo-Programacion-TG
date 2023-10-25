@@ -1,6 +1,6 @@
 package Factories.User;
 
-import Entities.User;
+import Model.User;
 import core.BussinessRuleValidateExeption;
 
 public class UserFactory implements IUserFactory {

@@ -3,7 +3,7 @@ package Repositories;
 import java.util.List;
 import java.util.UUID;
 
-import Entities.CategoriaCuenta;
+import Model.CategoriaCuenta;
 import core.IRepository;
 
 public interface ICategoriaCuentaRepository extends IRepository<CategoriaCuenta, UUID> {

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dto.CategoriaMovimientoDto;
-import Entities.CategoriaMovimiento;
 import Fourteam.mediator.RequestHandler;
+import Model.CategoriaMovimiento;
 import Repositories.ICategoriaMovimientoRepository;
 
 public class GetAllCategoriaMovimientoHandler implements RequestHandler<GetAllCategoriaMovimientoQuery, List<CategoriaMovimientoDto>> {

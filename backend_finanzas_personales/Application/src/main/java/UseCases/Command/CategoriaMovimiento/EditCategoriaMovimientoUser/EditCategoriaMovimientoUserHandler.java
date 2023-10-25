@@ -2,10 +2,10 @@ package UseCases.Command.CategoriaMovimiento.EditCategoriaMovimientoUser;
 
 import java.util.UUID;
 
-import Entities.CategoriaMovimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.CategoriaMovimiento;
 import Repositories.ICategoriaMovimientoRepository;
 import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;

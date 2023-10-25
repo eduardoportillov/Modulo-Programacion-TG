@@ -3,10 +3,10 @@ package UseCases.Command.User.Edit;
 import java.util.UUID;
 
 import Dto.UserDto;
-import Entities.User;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.User;
 import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
 import Repositories.IUserRepository;

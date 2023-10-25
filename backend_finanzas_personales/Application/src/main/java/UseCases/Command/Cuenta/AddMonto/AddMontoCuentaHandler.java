@@ -3,12 +3,12 @@ package UseCases.Command.Cuenta.AddMonto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import Entities.Cuenta;
-import Entities.Movimiento;
 import Factories.Movimiento.IMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.Cuenta;
+import Model.Movimiento;
 import Repositories.ICategoriaMovimientoRepository;
 import Repositories.ICuentaRepository;
 import Repositories.IMovimientoRepository;

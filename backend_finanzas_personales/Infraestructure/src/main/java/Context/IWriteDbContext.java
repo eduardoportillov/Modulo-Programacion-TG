@@ -1,13 +1,13 @@
 package Context;
 
-import Entities.CategoriaCuenta;
-import Entities.CategoriaMovimiento;
-import Entities.Cuenta;
-import Entities.Movimiento;
-import Entities.User;
 import Fourteam.db.DbContext;
 import Fourteam.db.DbSet;
 import Fourteam.db.Exception.DataBaseException;
+import Model.CategoriaCuenta;
+import Model.CategoriaMovimiento;
+import Model.Cuenta;
+import Model.Movimiento;
+import Model.User;
 
 public abstract class IWriteDbContext extends DbContext {
 

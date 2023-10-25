@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.UUID;
 
 import Context.IWriteDbContext;
-import Entities.CategoriaCuenta;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
+import Model.CategoriaCuenta;
 import Repositories.ICategoriaCuentaRepository;
 
 public class CategoriaCuentaRepository implements ICategoriaCuentaRepository {
@@ -43,7 +43,7 @@ public class CategoriaCuentaRepository implements ICategoriaCuentaRepository {
 
     @Override
     public CategoriaCuenta Delete(CategoriaCuenta CategoriaCuenta) throws Exception {
-        dbSet.Delete(equalKey(CategoriaCuenta.key));
+        dbSet.Delete(CategoriaCuenta, equalKey(CategoriaCuenta.key));
         return CategoriaCuenta;
     }
 

@@ -3,11 +3,11 @@ package UseCases.Command.CategoriaCuenta.CreateCategoriaCuentaUser;
 import java.util.UUID;
 
 import Dto.CategoriaCuentaDto;
-import Entities.CategoriaCuenta;
 import Factories.CategoriaCuenta.ICategoriaCuentaFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.CategoriaCuenta;
 import Repositories.ICategoriaCuentaRepository;
 import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;

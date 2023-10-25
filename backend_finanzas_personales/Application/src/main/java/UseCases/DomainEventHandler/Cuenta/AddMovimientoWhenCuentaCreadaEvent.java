@@ -3,12 +3,12 @@ package UseCases.DomainEventHandler.Cuenta;
 import java.time.LocalDateTime;
 
 import DomainEvents.Cuenta.CuentaCreada;
-import Entities.Cuenta;
-import Entities.Movimiento;
 import Factories.Movimiento.IMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.NotificationHandler;
+import Model.Cuenta;
+import Model.Movimiento;
 import Repositories.ICuentaRepository;
 import Repositories.IMovimientoRepository;
 import core.ConfirmedDomainEvent;

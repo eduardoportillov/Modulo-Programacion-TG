@@ -3,7 +3,7 @@ package Repositories;
 import java.util.List;
 import java.util.UUID;
 
-import Entities.User;
+import Model.User;
 import core.IRepository;
 
 public interface IUserRepository extends IRepository<User, UUID> {

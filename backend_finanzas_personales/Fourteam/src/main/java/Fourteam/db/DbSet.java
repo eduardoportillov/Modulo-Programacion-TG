@@ -76,7 +76,8 @@ public class DbSet<T> {
     _context.Update(obj, fun, this);
   }
 
-  public void Delete(BooleanFunction<T> fun) throws Exception {
+  public void Delete(T obj, BooleanFunction<T> fun) throws Exception {
+    addEvents(obj);
     _context.Delete(fun, this);
   }
 

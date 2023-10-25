@@ -2,7 +2,7 @@ package Factories.CategoriaCuenta;
 
 import java.util.UUID;
 
-import Entities.CategoriaCuenta;
+import Model.CategoriaCuenta;
 
 public class CategoriaCuentaFactory implements ICategoriaCuentaFactory{
 

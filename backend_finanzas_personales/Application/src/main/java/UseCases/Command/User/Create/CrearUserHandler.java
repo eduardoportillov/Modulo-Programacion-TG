@@ -1,10 +1,10 @@
 package UseCases.Command.User.Create;
 
-import Entities.User;
 import Factories.User.IUserFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.User;
 import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
 import Repositories.IUserRepository;
@@ -45,7 +45,7 @@ public class CrearUserHandler implements RequestHandler<CrearUserCommand, String
 
     user = _userFactory.Create(request.data.email, hashedPassword);
     
-    user.eventCreado(user.key);
+    user.eventCreado();
 
     _userRepository.Create(user);
 

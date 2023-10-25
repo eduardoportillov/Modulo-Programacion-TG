@@ -1,4 +1,4 @@
-package Entities.ValueObject;
+package Model.ValueObject;
 
 import Rule.StringNotNullOrEmptyRule;
 import core.BussinessRuleValidateExeption;

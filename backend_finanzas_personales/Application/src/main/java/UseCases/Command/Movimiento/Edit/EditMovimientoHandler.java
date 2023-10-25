@@ -1,10 +1,10 @@
 package UseCases.Command.Movimiento.Edit;
 
-import Entities.Movimiento;
-import Entities.ValueObject.Monto;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.Movimiento;
+import Model.ValueObject.Monto;
 import Repositories.ICategoriaMovimientoRepository;
 import Repositories.IMovimientoRepository;
 import Repositories.ISecurityUtils;

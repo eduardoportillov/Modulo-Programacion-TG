@@ -3,11 +3,11 @@ package UseCases.Command.CategoriaMovimiento.CreateCategoriaMovimientoUser;
 import java.util.UUID;
 
 import Dto.CategoriaMovimientoDto;
-import Entities.CategoriaMovimiento;
 import Factories.CategoriaMovimiento.ICategoriaMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Model.CategoriaMovimiento;
 import Repositories.ICategoriaMovimientoRepository;
 import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;

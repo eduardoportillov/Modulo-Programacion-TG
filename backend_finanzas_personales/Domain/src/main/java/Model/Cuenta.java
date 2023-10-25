@@ -1,9 +1,9 @@
-package Entities;
+package Model;
 
 import java.util.UUID;
 
 import DomainEvents.Cuenta.CuentaCreada;
-import Entities.ValueObject.Monto;
+import Model.ValueObject.Monto;
 import core.AggregateRoot;
 
 public class Cuenta extends AggregateRoot<UUID> {
