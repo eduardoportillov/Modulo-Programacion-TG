@@ -2,9 +2,9 @@ package UseCases.DomainEventHandler.Cuenta;
 
 import java.time.LocalDateTime;
 
-import DomainEvents.CuentaCreada;
-import Entities.Cuenta.Cuenta;
-import Entities.Movimiento.Movimiento;
+import DomainEvents.Cuenta.CuentaCreada;
+import Entities.Cuenta;
+import Entities.Movimiento;
 import Factories.Movimiento.IMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
@@ -13,12 +13,12 @@ import Repositories.ICuentaRepository;
 import Repositories.IMovimientoRepository;
 import core.ConfirmedDomainEvent;
 
-public class AddMovimientoEventWhenCuentaCreada implements NotificationHandler<ConfirmedDomainEvent<CuentaCreada>> {
+public class AddMovimientoWhenCuentaCreadaEvent implements NotificationHandler<ConfirmedDomainEvent<CuentaCreada>> {
     private IMovimientoFactory _movimientoFactory;
     private IMovimientoRepository _movimientoRepository;
     private ICuentaRepository _cuentaRepository;
 
-    public AddMovimientoEventWhenCuentaCreada(IMovimientoFactory _movimientoFactory,
+    public AddMovimientoWhenCuentaCreadaEvent(IMovimientoFactory _movimientoFactory,
             IMovimientoRepository _movimientoRepository, ICuentaRepository _cuentaRepository) {
         this._movimientoFactory = _movimientoFactory;
         this._movimientoRepository = _movimientoRepository;
@@ -37,7 +37,7 @@ public class AddMovimientoEventWhenCuentaCreada implements NotificationHandler<C
             }
 
             Movimiento movimiento = _movimientoFactory.Create(
-                    cuentaEvent.keyCuenta,
+                    null,
                     cuentaEvent.keyCuenta,
                     "Movimiento Inicial",
                     cuentaEvent.keyCategoria,

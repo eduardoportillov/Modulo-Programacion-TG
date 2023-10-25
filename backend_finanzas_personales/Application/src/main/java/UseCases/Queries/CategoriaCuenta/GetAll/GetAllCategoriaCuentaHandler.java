@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dto.CategoriaCuentaDto;
-import Entities.Cuenta.CategoriaCuenta;
+import Entities.CategoriaCuenta;
 import Fourteam.mediator.RequestHandler;
 import Repositories.ICategoriaCuentaRepository;
 

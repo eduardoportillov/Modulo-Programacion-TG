@@ -1,10 +1,13 @@
 package Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import Context.IWriteDbContext;
-import Entities.Movimiento.CategoriaMovimiento;
+import Entities.CategoriaMovimiento;
+import Entities.Cuenta;
+import Entities.Movimiento;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
 import Repositories.ICategoriaMovimientoRepository;
@@ -57,4 +60,16 @@ public class CategoriaMovimientoRepository implements ICategoriaMovimientoReposi
         return dbSet.All();
     }
 
+    @Override
+    public List<CategoriaMovimiento> GetAllByKeyUser(UUID keyUser) throws Exception {
+        return dbSet.Filter(obj -> {
+            UUID uuid = obj.getKeyUser();
+            if (uuid != null) {
+                if (uuid.equals(keyUser)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
 }

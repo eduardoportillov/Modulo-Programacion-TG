@@ -8,21 +8,25 @@ import Entities.User;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ISecurityUtils;
 import Repositories.IUserRepository;
 
 public class GetAllUserHandler implements RequestHandler<GetAllUserQuery, List<UserDto>> {
 
     public IUserRepository _userRepository;
 
-    public GetAllUserHandler(IUserRepository userRepository) {
-        this._userRepository = userRepository;
+    private ISecurityUtils _securityUtils;
+
+    public GetAllUserHandler(IUserRepository userRepository, ISecurityUtils securityUtils) {
+        _userRepository = userRepository;
+        _securityUtils = securityUtils;
     }
 
     @Override
     public List<UserDto> handle(GetAllUserQuery request) throws Exception {
 
         try {
-            User.decodeTokenWithUser(request.token);
+            _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }

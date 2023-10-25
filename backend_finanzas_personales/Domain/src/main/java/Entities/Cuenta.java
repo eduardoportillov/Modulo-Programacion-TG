@@ -1,8 +1,8 @@
-package Entities.Cuenta;
+package Entities;
 
 import java.util.UUID;
 
-import DomainEvents.CuentaCreada;
+import DomainEvents.Cuenta.CuentaCreada;
 import Entities.ValueObject.Monto;
 import core.AggregateRoot;
 

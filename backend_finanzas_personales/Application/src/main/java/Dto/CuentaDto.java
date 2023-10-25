@@ -2,7 +2,7 @@ package Dto;
 
 import java.util.UUID;
 
-import Entities.Cuenta.Cuenta;
+import Entities.Cuenta;
 
 public class CuentaDto {
     public UUID key;

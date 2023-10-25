@@ -1,12 +1,14 @@
 package Factories.CategoriaMovimiento;
 
-import Entities.Movimiento.CategoriaMovimiento;
+import java.util.UUID;
+
+import Entities.CategoriaMovimiento;
 
 public class CategoriaMovimientoFactory implements ICategoriaMovimientoFactory{
 
     @Override
-    public CategoriaMovimiento Create(String nombre) {
-        return new CategoriaMovimiento(nombre);
+    public CategoriaMovimiento Create(String nombre, UUID keyUser) {
+        return new CategoriaMovimiento(nombre, keyUser);
     }
 
     

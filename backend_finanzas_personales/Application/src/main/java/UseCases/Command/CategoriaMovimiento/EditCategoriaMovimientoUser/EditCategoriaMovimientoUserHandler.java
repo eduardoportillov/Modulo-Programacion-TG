@@ -1,48 +1,51 @@
 package UseCases.Command.CategoriaMovimiento.EditCategoriaMovimientoUser;
 
-import Entities.User;
-import Entities.Cuenta.CategoriaCuenta;
-import Entities.Movimiento.CategoriaMovimiento;
+import java.util.UUID;
+
+import Entities.CategoriaMovimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ICategoriaMovimientoRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
-import Repositories.IUserRepository;
 
 public class EditCategoriaMovimientoUserHandler implements RequestHandler<EditCategoriaMovimientoUserCommand, String> {
-    private IUserRepository _userRepository;
+    private ICategoriaMovimientoRepository _movimientoCategoriaRepository;
+
+    private ISecurityUtils _securityUtils;
+
     private IUnitOfWork _unitOfWork;
 
-    public EditCategoriaMovimientoUserHandler(IUserRepository _userRepository, IUnitOfWork _unitOfWork) {
-        this._userRepository = _userRepository;
+    
+    public EditCategoriaMovimientoUserHandler(ICategoriaMovimientoRepository _movimientoCategoriaRepository,
+            ISecurityUtils _securityUtils, IUnitOfWork _unitOfWork) {
+        this._movimientoCategoriaRepository = _movimientoCategoriaRepository;
+        this._securityUtils = _securityUtils;
         this._unitOfWork = _unitOfWork;
     }
 
+
     @Override
     public String handle(EditCategoriaMovimientoUserCommand request) throws Exception {
-        User user;
+        UUID keyUser;
         try {
-            user = User.decodeTokenWithUser(request.token);
+            keyUser = _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }
-        user = _userRepository.FindByKey(user.key);
-        for (CategoriaMovimiento cc : user.categoriaMovimientoUser) {
-            try {
-                if (cc.key.toString().equals(request.categoriaMovimiento.key.toString())) {
-                    cc.nombre = request.categoriaMovimiento.nombre;
 
-                    _userRepository.Update(user);
-                    _unitOfWork.commit();
-                    return "Categoria Movimiento User editada con exito ";
-                }
-            } catch (Exception e) {
-                throw new HttpException(HttpStatus.BAD_REQUEST, e.getMessage());
-            }
+        CategoriaMovimiento categoriaMovimiento = _movimientoCategoriaRepository
+                .FindByKey(request.categoriaMovimiento.getKey());
 
+        if (categoriaMovimiento.getKeyUser().equals(keyUser)) {
+            categoriaMovimiento.setNombre(request.categoriaMovimiento.getNombre());
+            _movimientoCategoriaRepository.Update(categoriaMovimiento);
+            _unitOfWork.commit();
+            return "Categoria Movimiento del User editada con éxito";
+        } else {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "La Categoria Movimiento no pertenece al usuario");
         }
-
-        return "Error";
     }
 
 }

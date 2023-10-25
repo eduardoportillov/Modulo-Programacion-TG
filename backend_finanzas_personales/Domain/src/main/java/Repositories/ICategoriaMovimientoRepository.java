@@ -3,7 +3,7 @@ package Repositories;
 import java.util.List;
 import java.util.UUID;
 
-import Entities.Movimiento.CategoriaMovimiento;
+import Entities.CategoriaMovimiento;
 import core.IRepository;
 
 public interface ICategoriaMovimientoRepository extends IRepository<CategoriaMovimiento, UUID> {
@@ -16,4 +16,6 @@ public interface ICategoriaMovimientoRepository extends IRepository<CategoriaMov
     public CategoriaMovimiento Update(CategoriaMovimiento CategoriaMovimiento) throws Exception;
 
     public List<CategoriaMovimiento> GetAll() throws Exception;
+
+    public List<CategoriaMovimiento> GetAllByKeyUser(UUID keyUser) throws Exception;
 }

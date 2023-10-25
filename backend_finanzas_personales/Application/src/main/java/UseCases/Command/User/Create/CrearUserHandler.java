@@ -5,6 +5,7 @@ import Factories.User.IUserFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
 import Repositories.IUserRepository;
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -12,16 +13,22 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 public class CrearUserHandler implements RequestHandler<CrearUserCommand, String> {
   private IUserFactory _userFactory;
   private IUserRepository _userRepository;
+
+  private ISecurityUtils _securityUtils;
+
   private IUnitOfWork _unitOfWork;
 
-  public CrearUserHandler(
-      IUserFactory userFactory,
-      IUserRepository userRepository,
+
+
+  public CrearUserHandler(IUserFactory _userFactory, IUserRepository _userRepository, ISecurityUtils _securityUtils,
       IUnitOfWork _unitOfWork) {
-    this._userFactory = userFactory;
-    this._userRepository = userRepository;
+    this._userFactory = _userFactory;
+    this._userRepository = _userRepository;
+    this._securityUtils = _securityUtils;
     this._unitOfWork = _unitOfWork;
   }
+
+
 
   @Override
   public String handle(CrearUserCommand request) throws Exception {
@@ -44,6 +51,6 @@ public class CrearUserHandler implements RequestHandler<CrearUserCommand, String
 
     _unitOfWork.commit();
 
-    return user.generateTokenWithUser();
+    return _securityUtils.generateToken(user.getKey());
   }
 }

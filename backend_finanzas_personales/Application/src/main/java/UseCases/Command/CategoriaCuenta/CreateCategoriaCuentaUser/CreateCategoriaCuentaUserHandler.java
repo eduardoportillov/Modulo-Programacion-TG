@@ -1,40 +1,47 @@
 package UseCases.Command.CategoriaCuenta.CreateCategoriaCuentaUser;
 
+import java.util.UUID;
+
 import Dto.CategoriaCuentaDto;
-import Entities.User;
-import Entities.Cuenta.CategoriaCuenta;
+import Entities.CategoriaCuenta;
 import Factories.CategoriaCuenta.ICategoriaCuentaFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ICategoriaCuentaRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
-import Repositories.IUserRepository;
 
 public class CreateCategoriaCuentaUserHandler
         implements RequestHandler<CreateCategoriaCuentaUserCommand, CategoriaCuentaDto> {
-    private IUserRepository _userRepository;
+    // private IUserRepository _userRepository;
     private ICategoriaCuentaFactory _cuentaCategoriaFactory;
+    private ICategoriaCuentaRepository _cuentaCuentaRepository;
+
+    private ISecurityUtils _securityUtils;
+
     private IUnitOfWork _unitOfWork;
 
-    public CreateCategoriaCuentaUserHandler(IUserRepository _userRepository,
-            ICategoriaCuentaFactory _cuentaCategoriaFactory, IUnitOfWork _unitOfWork) {
-        this._userRepository = _userRepository;
+    public CreateCategoriaCuentaUserHandler(ICategoriaCuentaFactory _cuentaCategoriaFactory,
+            ICategoriaCuentaRepository _cuentaCuentaRepository, ISecurityUtils _securityUtils,
+            IUnitOfWork _unitOfWork) {
         this._cuentaCategoriaFactory = _cuentaCategoriaFactory;
+        this._cuentaCuentaRepository = _cuentaCuentaRepository;
+        this._securityUtils = _securityUtils;
         this._unitOfWork = _unitOfWork;
     }
 
     @Override
     public CategoriaCuentaDto handle(CreateCategoriaCuentaUserCommand request) throws Exception {
-        User user;
+        UUID keyUser;
 
         try {
-            user = User.decodeTokenWithUser(request.token);
-            user = _userRepository.FindByKey(user.key);
-            CategoriaCuenta categoriaCuenta = _cuentaCategoriaFactory.Create(request.cc.getNombre());
+            keyUser = _securityUtils.decodeToken(request.token);
 
-            user.addCategoriaCuentaUser(categoriaCuenta);
+            CategoriaCuenta categoriaCuenta = _cuentaCategoriaFactory.Create(request.cc.getNombre(), keyUser, CategoriaCuenta.generarColorPastelAleatorio());
 
-            _userRepository.Update(user);
+            _cuentaCuentaRepository.Create(categoriaCuenta);
+
             _unitOfWork.commit();
 
             return new CategoriaCuentaDto(categoriaCuenta);

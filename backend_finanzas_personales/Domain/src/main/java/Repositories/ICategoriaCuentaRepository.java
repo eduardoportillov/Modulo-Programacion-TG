@@ -3,7 +3,7 @@ package Repositories;
 import java.util.List;
 import java.util.UUID;
 
-import Entities.Cuenta.CategoriaCuenta;
+import Entities.CategoriaCuenta;
 import core.IRepository;
 
 public interface ICategoriaCuentaRepository extends IRepository<CategoriaCuenta, UUID> {
@@ -16,4 +16,6 @@ public interface ICategoriaCuentaRepository extends IRepository<CategoriaCuenta,
     public CategoriaCuenta Update(CategoriaCuenta CategoriaCuenta) throws Exception;
 
     public List<CategoriaCuenta> GetAll() throws Exception;
+
+    public List<CategoriaCuenta> GetAllByKeyUser(UUID keyUser) throws Exception;
 }

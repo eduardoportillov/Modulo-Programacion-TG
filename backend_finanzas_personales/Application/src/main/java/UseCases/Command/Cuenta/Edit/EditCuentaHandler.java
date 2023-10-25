@@ -1,28 +1,39 @@
 package UseCases.Command.Cuenta.Edit;
 
-import Entities.User;
-import Entities.Cuenta.Cuenta;
+import java.util.UUID;
+
+import Entities.Cuenta;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ICategoriaCuentaRepository;
 import Repositories.ICuentaRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
 
 public class EditCuentaHandler implements RequestHandler<EditCuentaCommand, String> {
     private ICuentaRepository _cuentaRepository;
+
+    private ICategoriaCuentaRepository _categoriaCuentaRepository;
+
+    private ISecurityUtils _securityUtils;
+
     private IUnitOfWork _unitOfWork;
 
-    public EditCuentaHandler(ICuentaRepository _cuentaRepository, IUnitOfWork _unitOfWork) {
+    public EditCuentaHandler(ICuentaRepository _cuentaRepository, ICategoriaCuentaRepository _categoriaCuentaRepository,
+            ISecurityUtils _securityUtils, IUnitOfWork _unitOfWork) {
         this._cuentaRepository = _cuentaRepository;
+        this._categoriaCuentaRepository = _categoriaCuentaRepository;
+        this._securityUtils = _securityUtils;
         this._unitOfWork = _unitOfWork;
     }
 
     @Override
     public String handle(EditCuentaCommand request) throws Exception {
-        User user;
+        UUID keyUser;
 
         try {
-            user = User.decodeTokenWithUser(request.token);
+            keyUser = _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }
@@ -41,7 +52,7 @@ public class EditCuentaHandler implements RequestHandler<EditCuentaCommand, Stri
         }
 
         if (request.cuenta.keyCategoria != null) {
-            if (user.isCategoriaCuentaUser(request.cuenta.keyCategoria)) {
+            if (!_categoriaCuentaRepository.FindByKey(request.cuenta.keyCategoria).getKeyUser().equals(keyUser)) {
                 throw new HttpException(HttpStatus.BAD_REQUEST, "La categoría cuenta no pertenece al usuario");
             }
             cuenta.keyCategoria = request.cuenta.keyCategoria;

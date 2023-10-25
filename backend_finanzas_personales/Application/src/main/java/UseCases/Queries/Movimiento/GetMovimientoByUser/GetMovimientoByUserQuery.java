@@ -4,11 +4,12 @@ import java.util.UUID;
 
 import Fourteam.mediator.Request;
 
-public class GetMovimientoByUserQuery implements Request<UUID>{
-    public UUID keyUser;
+public class GetMovimientoByUserQuery implements Request<UUID> {
+    // public UUID keyUser;
     public String token;
 
-    public GetMovimientoByUserQuery(UUID keyUser){
-        this.keyUser = keyUser;
+    public GetMovimientoByUserQuery(String auth) {
+        // this.keyUser = keyUser;
+        token = auth;
     }
 }

@@ -1,40 +1,49 @@
 package UseCases.Command.CategoriaMovimiento.EliminarCategoriaMovimientoUser;
 
-import Entities.User;
+import java.util.UUID;
+
+import Entities.CategoriaMovimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ICategoriaMovimientoRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
-import Repositories.IUserRepository;
 
-public class EliminarCategoriaMovimientoUserHandler implements RequestHandler<EliminarCategoriaMovimientoUserCommand, String> {
-    IUserRepository _userRepository;
+public class EliminarCategoriaMovimientoUserHandler
+        implements RequestHandler<EliminarCategoriaMovimientoUserCommand, String> {
+    private ICategoriaMovimientoRepository _categoriaMovimientoRepository;
+
+    private ISecurityUtils _securityUtils;
+
     IUnitOfWork _unitOfWork;
 
-    public EliminarCategoriaMovimientoUserHandler(IUserRepository userRepository) {
-        this._userRepository = userRepository;
+    public EliminarCategoriaMovimientoUserHandler(ICategoriaMovimientoRepository _categoriaMovimientoRepository,
+            ISecurityUtils _securityUtils, IUnitOfWork _unitOfWork) {
+        this._categoriaMovimientoRepository = _categoriaMovimientoRepository;
+        this._securityUtils = _securityUtils;
+        this._unitOfWork = _unitOfWork;
     }
 
     @Override
     public String handle(EliminarCategoriaMovimientoUserCommand request) throws Exception {
-        User user;
+        UUID keyUser;
         try {
-            user = User.decodeTokenWithUser(request.token);
+            keyUser = _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }
 
-        user = _userRepository.FindByKey(user.key);
+        CategoriaMovimiento categoriaMovimiento = _categoriaMovimientoRepository
+                .FindByKey(request.categoriaMovimiento.getKey());
 
-        if (user.isCategoriaMovimientoUser(request.categoriaMovimiento.key)) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "No se encontro la categoria");
+        if (categoriaMovimiento.getKeyUser().equals(keyUser)) {
+            _categoriaMovimientoRepository.Delete(categoriaMovimiento);
+            _unitOfWork.commit();
+            return "Categoria Movimiento del User Eliminado con éxito";
+        } else {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "La Categoria Movimiento no pertenece al usuario");
         }
-
-        user.categoriaMovimientoUser.removeIf(cc -> cc.key.toString().equals(request.categoriaMovimiento.key.toString()));
-
-        _userRepository.Update(user);
-
-        return "Categoria Usuario Eliminada con Exito";
 
     }
 

@@ -1,4 +1,4 @@
-package DomainEvents;
+package DomainEvents.User;
 
 import java.util.UUID;
 

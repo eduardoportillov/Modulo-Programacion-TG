@@ -1,7 +1,9 @@
 package Factories.CategoriaMovimiento;
 
-import Entities.Movimiento.CategoriaMovimiento;
+import java.util.UUID;
+
+import Entities.CategoriaMovimiento;
 
 public interface ICategoriaMovimientoFactory {
-    public CategoriaMovimiento Create(String nombre);
+    public CategoriaMovimiento Create(String nombre, UUID keyUser);
 }

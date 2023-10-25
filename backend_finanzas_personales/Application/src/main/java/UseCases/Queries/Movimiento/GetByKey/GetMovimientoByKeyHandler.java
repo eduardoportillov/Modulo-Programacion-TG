@@ -1,26 +1,27 @@
 package UseCases.Queries.Movimiento.GetByKey;
 
-import Dto.CuentaDto;
 import Dto.MovimientoDto;
-import Entities.User;
-import Entities.Cuenta.Cuenta;
-import Entities.Movimiento.Movimiento;
+import Entities.Movimiento;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
 import Repositories.IMovimientoRepository;
+import Repositories.ISecurityUtils;
 
 public class GetMovimientoByKeyHandler implements RequestHandler<GetMovimientoByKeyQuery, MovimientoDto> {
     IMovimientoRepository _movimientoRepository;
 
-    public GetMovimientoByKeyHandler(IMovimientoRepository _movimientoRepository) {
-        this._movimientoRepository = _movimientoRepository;
+    private ISecurityUtils _securityUtils;
+
+    public GetMovimientoByKeyHandler(IMovimientoRepository movimientoRepository, ISecurityUtils securityUtils) {
+        _movimientoRepository = movimientoRepository;
+        _securityUtils = securityUtils;
     }
 
     @Override
     public MovimientoDto handle(GetMovimientoByKeyQuery request) throws Exception {
         try {
-            User.decodeTokenWithUser(request.token);
+            _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }

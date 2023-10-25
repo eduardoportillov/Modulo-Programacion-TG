@@ -29,8 +29,10 @@ import UseCases.Command.Movimiento.Edit.EditMovimientoHandler;
 import UseCases.Command.Movimiento.Eliminar.EliminarMovimientoHandler;
 import UseCases.Command.User.Create.CrearUserHandler;
 import UseCases.Command.User.Edit.EditUserHandler;
-import UseCases.DomainEventHandler.Cuenta.AddMovimientoEventWhenCuentaCreada;
-import UseCases.DomainEventHandler.User.AddCategoriaEventWhenUserCreado;
+import UseCases.DomainEventHandler.Cuenta.AddMovimientoWhenCuentaCreadaEvent;
+import UseCases.DomainEventHandler.Movimiento.EditCuentaWhenMovimientoCreadoEvent;
+import UseCases.DomainEventHandler.Movimiento.EditCuentaWhenMovimientoEditEvent;
+import UseCases.DomainEventHandler.User.AddCategoriaWhenUserCreadoEvent;
 import UseCases.Queries.CategoriaCuenta.GetAll.GetAllCategoriaCuentaHandler;
 import UseCases.Queries.CategoriaCuenta.GetAllCategoriaCuentaUser.GetAllCategoriaCuentaUserHandler;
 import UseCases.Queries.CategoriaMovimiento.GetAll.GetAllCategoriaMovimientoHandler;
@@ -91,8 +93,12 @@ public class Application {
     IMediator.registerHandler(EliminarCategoriaMovimientoUserHandler.class);
 
     // Domain Events
-    IMediator.registerHandler(AddCategoriaEventWhenUserCreado.class);
-    IMediator.registerHandler(AddMovimientoEventWhenCuentaCreada.class);
+    IMediator.registerHandler(AddMovimientoWhenCuentaCreadaEvent.class);
+
+    IMediator.registerHandler(EditCuentaWhenMovimientoCreadoEvent.class);
+    IMediator.registerHandler(EditCuentaWhenMovimientoEditEvent.class);
+
+    IMediator.registerHandler(AddCategoriaWhenUserCreadoEvent.class);
 
     IServiceCollection.AddTransient(IUserFactory.class, UserFactory.class);
     IServiceCollection.AddTransient(ICuentaFactory.class, CuentaFactory.class);

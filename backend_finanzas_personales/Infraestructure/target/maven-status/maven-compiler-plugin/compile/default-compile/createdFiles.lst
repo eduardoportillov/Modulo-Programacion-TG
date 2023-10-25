@@ -1,0 +1,9 @@
+Repository\CuentaRepository.class
+UnitOfWork.class
+Context\MongoDB\WriteDbContext.class
+Infraestructure.class
+Repository\CategoriaCuentaRepository.class
+Context\IWriteDbContext.class
+Repository\MovimientoRepository.class
+Repository\UserRepository.class
+Repository\CategoriaMovimientoRepository.class

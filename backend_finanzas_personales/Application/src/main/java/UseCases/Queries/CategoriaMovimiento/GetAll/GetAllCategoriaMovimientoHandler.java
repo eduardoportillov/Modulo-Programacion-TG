@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dto.CategoriaMovimientoDto;
-import Entities.Movimiento.CategoriaMovimiento;
+import Entities.CategoriaMovimiento;
 import Fourteam.mediator.RequestHandler;
 import Repositories.ICategoriaMovimientoRepository;
 

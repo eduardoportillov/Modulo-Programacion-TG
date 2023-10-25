@@ -1,6 +1,7 @@
 package UseCases.Queries.User.Login;
 
 import Entities.User;
+import Repositories.ISecurityUtils;
 import Repositories.IUserRepository;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import Fourteam.http.HttpStatus;
@@ -11,8 +12,11 @@ public class LoginUserHandler implements RequestHandler<LoginUserQuery, String> 
 
     private IUserRepository _userRepository;
 
-    public LoginUserHandler(IUserRepository userRepository) {
-        this._userRepository = userRepository;
+    private ISecurityUtils _securityUtils;
+
+    public LoginUserHandler(IUserRepository _userRepository, ISecurityUtils _securityUtils) {
+        this._userRepository = _userRepository;
+        this._securityUtils = _securityUtils;
     }
 
     @Override
@@ -39,6 +43,6 @@ public class LoginUserHandler implements RequestHandler<LoginUserQuery, String> 
             throw new HttpException(HttpStatus.BAD_REQUEST, "password invalid.");
         }
 
-        return user.generateTokenWithUser();
+        return _securityUtils.generateToken(user.getKey());
     }
 }

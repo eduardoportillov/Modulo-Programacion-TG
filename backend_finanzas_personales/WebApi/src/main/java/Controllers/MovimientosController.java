@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import Dto.MovimientoDto;
+import Dto.UserDto;
 import Fourteam.http.annotation.DeleteMapping;
 import Fourteam.http.annotation.GetMapping;
 import Fourteam.http.annotation.PathVariable;
@@ -14,12 +15,14 @@ import Fourteam.http.annotation.RequestHeader;
 import Fourteam.http.annotation.RequestMapping;
 import Fourteam.http.annotation.RestController;
 import Fourteam.mediator.Mediator;
+import Fourteam.mediator.Response;
 import UseCases.Command.Movimiento.Create.CreateMovimientoCommand;
 import UseCases.Command.Movimiento.Edit.EditMovimientoCommand;
 import UseCases.Command.Movimiento.Eliminar.EliminarMovimientoCommand;
 import UseCases.Queries.Movimiento.GetByKey.GetMovimientoByKeyQuery;
 import UseCases.Queries.Movimiento.GetMovimientoByCuenta.GetMovimientoByCuentaQuery;
 import UseCases.Queries.Movimiento.GetMovimientoByUser.GetMovimientoByUserQuery;
+import UseCases.Queries.User.GetAll.GetAllUserQuery;
 
 @RestController
 @RequestMapping("/movimiento")
@@ -76,11 +79,14 @@ public class MovimientosController {
         return (List<MovimientoDto>) _mediator.send(request).data;
     }
 
-    @GetMapping("/getbyuser/{key}")
+    @GetMapping("/getbyuser")
     public List<MovimientoDto> getByUser(
-            @PathVariable GetMovimientoByUserQuery request,
+            // @PathVariable GetMovimientoByUserQuery request,
             @RequestHeader(value = "Authorization", required = true) String auth) throws Exception {
-        request.token = auth;
-        return (List<MovimientoDto>) _mediator.send(request).data;
+        // request.token = auth;
+        // return (List<MovimientoDto>) _mediator.send(request).data;
+
+        Response<List<MovimientoDto>> lista = _mediator.send(new GetMovimientoByUserQuery(auth));
+        return lista.data;
     }
 }

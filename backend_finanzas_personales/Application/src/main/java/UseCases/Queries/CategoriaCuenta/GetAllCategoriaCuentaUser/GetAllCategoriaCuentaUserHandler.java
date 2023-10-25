@@ -2,41 +2,51 @@ package UseCases.Queries.CategoriaCuenta.GetAllCategoriaCuentaUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import Dto.CategoriaCuentaDto;
-import Entities.User;
-import Entities.Cuenta.CategoriaCuenta;
+import Entities.CategoriaCuenta;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
-import Repositories.IUserRepository;
+import Repositories.ICategoriaCuentaRepository;
+import Repositories.ISecurityUtils;
 
 public class GetAllCategoriaCuentaUserHandler
         implements RequestHandler<GetAllCategoriaCuentaUserQuery, List<CategoriaCuentaDto>> {
-    IUserRepository _userRepository;
+    private ICategoriaCuentaRepository _categoriaCuentaRepository;
 
-    public GetAllCategoriaCuentaUserHandler(IUserRepository _userRepository) {
-        this._userRepository = _userRepository;
+    private ISecurityUtils _SecurityUtils;
+
+    public GetAllCategoriaCuentaUserHandler(ICategoriaCuentaRepository _categoriaCuentaRepository,
+            ISecurityUtils _SecurityUtils) {
+        this._categoriaCuentaRepository = _categoriaCuentaRepository;
+        this._SecurityUtils = _SecurityUtils;
     }
 
     @Override
     public List<CategoriaCuentaDto> handle(GetAllCategoriaCuentaUserQuery request) throws Exception {
-        User user;
+        UUID keyUser;
         List<CategoriaCuentaDto> listCategoriaCuenta = new ArrayList<CategoriaCuentaDto>();
 
         try {
-            user = User.decodeTokenWithUser(request.token);
-
-            user = _userRepository.FindByKey(user.key);
-            for (CategoriaCuenta cc : user.getCategoriaCuentaUser()) {
-                listCategoriaCuenta.add(new CategoriaCuentaDto(cc));
-            }
+            keyUser = _SecurityUtils.decodeToken(request.token);
 
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }
 
-        return  listCategoriaCuenta;
+        try {
+            for (CategoriaCuenta cc : _categoriaCuentaRepository.GetAllByKeyUser(keyUser)) {
+                if (cc.getKeyUser().equals(keyUser)) {
+                    listCategoriaCuenta.add(new CategoriaCuentaDto(cc));
+                }
+            }
+        } catch (Exception e) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+        return listCategoriaCuenta;
     }
 
 }

@@ -1,10 +1,11 @@
 package Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import Context.IWriteDbContext;
-import Entities.Cuenta.CategoriaCuenta;
+import Entities.CategoriaCuenta;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
 import Repositories.ICategoriaCuentaRepository;
@@ -23,7 +24,7 @@ public class CategoriaCuentaRepository implements ICategoriaCuentaRepository {
 
     public BooleanFunction<CategoriaCuenta> equalName(String name) {
         return obj -> obj.getNombre().equals(name);
-      }
+    }
 
     @Override
     public void Create(CategoriaCuenta obj) throws Exception {
@@ -55,6 +56,19 @@ public class CategoriaCuentaRepository implements ICategoriaCuentaRepository {
     @Override
     public List<CategoriaCuenta> GetAll() throws Exception {
         return dbSet.All();
+    }
+
+    @Override
+    public List<CategoriaCuenta> GetAllByKeyUser(UUID keyUser) throws Exception {
+        return dbSet.Filter(obj -> {
+            UUID uuid = obj.getKeyUser();
+            if (uuid != null) {
+                if (uuid.equals(keyUser)) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
 }

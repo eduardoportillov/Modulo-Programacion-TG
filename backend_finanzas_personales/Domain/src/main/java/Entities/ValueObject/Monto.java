@@ -5,7 +5,7 @@ import core.BussinessRuleValidateExeption;
 import core.ValueObject;
 
 public class Monto extends ValueObject {
-    double monto;
+    private double monto;
 
     public Monto(double monto) {
         // this.validateMontoNotCero(monto);
@@ -43,11 +43,15 @@ public class Monto extends ValueObject {
         return monto;
     }
 
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
+
     // @VALIDACIÓN_NO_MONTO_NEGATIVO
     // private void validateMontoNotCero(double monto) {
-    //     if (monto < 0) {
-    //         throw new IllegalArgumentException("El monto no puede ser negativo");
-    //     }
+    // if (monto < 0) {
+    // throw new IllegalArgumentException("El monto no puede ser negativo");
+    // }
     // }
 
 }

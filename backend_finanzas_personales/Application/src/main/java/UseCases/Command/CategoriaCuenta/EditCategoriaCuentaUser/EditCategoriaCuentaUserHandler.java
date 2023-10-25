@@ -1,47 +1,50 @@
 package UseCases.Command.CategoriaCuenta.EditCategoriaCuentaUser;
 
-import Entities.User;
-import Entities.Cuenta.CategoriaCuenta;
+import java.util.UUID;
+
+import Entities.CategoriaCuenta;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ICategoriaCuentaRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
-import Repositories.IUserRepository;
 
 public class EditCategoriaCuentaUserHandler implements RequestHandler<EditCategoriaCuentaUserCommand, String> {
-    private IUserRepository _userRepository;
+    private ICategoriaCuentaRepository _categoriaCuentaRepository;
+
+    private ISecurityUtils _securityUtils;
+
     private IUnitOfWork _unitOfWork;
 
-    public EditCategoriaCuentaUserHandler(IUserRepository _userRepository, IUnitOfWork _unitOfWork) {
-        this._userRepository = _userRepository;
+    public EditCategoriaCuentaUserHandler(ICategoriaCuentaRepository _categoriaCuentaRepository,
+            ISecurityUtils _securityUtils, IUnitOfWork _unitOfWork) {
+        this._categoriaCuentaRepository = _categoriaCuentaRepository;
+        this._securityUtils = _securityUtils;
         this._unitOfWork = _unitOfWork;
     }
 
     @Override
     public String handle(EditCategoriaCuentaUserCommand request) throws Exception {
-        User user;
+        UUID keyUser;
+
         try {
-            user = User.decodeTokenWithUser(request.token);
+            keyUser = _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }
-        user = _userRepository.FindByKey(user.key);
-        for (CategoriaCuenta cc : user.categoriaCuentaUser) {
-            try {
-                if (cc.key.toString().equals(request.categoriacuenta.key.toString())) {
-                    cc.nombre = request.categoriacuenta.nombre;
 
-                    _userRepository.Update(user);
-                    _unitOfWork.commit();
-                    return "Categoria Cuenta User editada con exito ";
-                }
-            } catch (Exception e) {
-                throw new HttpException(HttpStatus.BAD_REQUEST, e.getMessage());
-            }
+        CategoriaCuenta categoriaCuenta = _categoriaCuentaRepository.FindByKey(request.categoriacuenta.getKey());
 
+        if (categoriaCuenta.getKeyUser().equals(keyUser)) {
+            categoriaCuenta.setNombre(request.categoriacuenta.getNombre());
+            _categoriaCuentaRepository.Update(categoriaCuenta);
+            _unitOfWork.commit();
+            return "Categoria Cuenta del User editada con éxito";
+        } else {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "La Categoria Cuenta no pertenece al usuario");
         }
 
-        return "Error";
     }
 
 }

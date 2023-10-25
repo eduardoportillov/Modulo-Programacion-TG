@@ -1,42 +1,45 @@
 package UseCases.Command.CategoriaMovimiento.CreateCategoriaMovimientoUser;
 
-import Dto.CategoriaCuentaDto;
+import java.util.UUID;
+
 import Dto.CategoriaMovimientoDto;
-import Entities.User;
-import Entities.Movimiento.CategoriaMovimiento;
+import Entities.CategoriaMovimiento;
 import Factories.CategoriaMovimiento.ICategoriaMovimientoFactory;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ICategoriaMovimientoRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
-import Repositories.IUserRepository;
 
 public class CreateCategoriaMovimientoUserHandler
         implements RequestHandler<CreateCategoriaMovimientoUserCommand, CategoriaMovimientoDto> {
-    private IUserRepository _userRepository;
     private ICategoriaMovimientoFactory _movimientoCategoriaFactory;
+    private ICategoriaMovimientoRepository _cuentaCategoriaRepository;
+
+    private ISecurityUtils _securityUtils;
+
     private IUnitOfWork _unitOfWork;
 
-    public CreateCategoriaMovimientoUserHandler(IUserRepository _userRepository,
-            ICategoriaMovimientoFactory _movimientoCategoriaFactory, IUnitOfWork _unitOfWork) {
-        this._userRepository = _userRepository;
+    public CreateCategoriaMovimientoUserHandler(ICategoriaMovimientoFactory _movimientoCategoriaFactory,
+            ICategoriaMovimientoRepository _cuentaCategoriaRepository, ISecurityUtils _securityUtils,
+            IUnitOfWork _unitOfWork) {
         this._movimientoCategoriaFactory = _movimientoCategoriaFactory;
+        this._cuentaCategoriaRepository = _cuentaCategoriaRepository;
+        this._securityUtils = _securityUtils;
         this._unitOfWork = _unitOfWork;
     }
 
     @Override
     public CategoriaMovimientoDto handle(CreateCategoriaMovimientoUserCommand request) throws Exception {
-        User user;
+        UUID keyUser;
 
         try {
-            user = User.decodeTokenWithUser(request.token);
-            user = _userRepository.FindByKey(user.key);
+            keyUser = _securityUtils.decodeToken(request.token);
 
-            CategoriaMovimiento categoriaCuenta = _movimientoCategoriaFactory.Create(request.cm.getNombre());
+            CategoriaMovimiento categoriaCuenta = _movimientoCategoriaFactory.Create(request.cm.getNombre(), keyUser);
+            _cuentaCategoriaRepository.Create(categoriaCuenta);
 
-            user.addCategoriaMovimientoUser(categoriaCuenta);
-
-            _userRepository.Update(user);
             _unitOfWork.commit();
 
             return new CategoriaMovimientoDto(categoriaCuenta);

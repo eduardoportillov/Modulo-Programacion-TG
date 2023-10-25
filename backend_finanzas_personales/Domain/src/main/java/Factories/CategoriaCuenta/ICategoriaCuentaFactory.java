@@ -1,7 +1,9 @@
 package Factories.CategoriaCuenta;
 
-import Entities.Cuenta.CategoriaCuenta;
+import java.util.UUID;
+
+import Entities.CategoriaCuenta;
 
 public interface ICategoriaCuentaFactory {
-    public CategoriaCuenta Create(String nombre);
+    public CategoriaCuenta Create(String nombre, UUID keyUser, String color);
 }

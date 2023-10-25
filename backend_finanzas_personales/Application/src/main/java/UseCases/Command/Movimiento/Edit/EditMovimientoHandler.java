@@ -1,35 +1,38 @@
 package UseCases.Command.Movimiento.Edit;
 
-import Entities.User;
-import Entities.Cuenta.Cuenta;
-import Entities.Movimiento.Movimiento;
+import Entities.Movimiento;
 import Entities.ValueObject.Monto;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
-import Repositories.ICuentaRepository;
+import Repositories.ICategoriaMovimientoRepository;
 import Repositories.IMovimientoRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
 
 public class EditMovimientoHandler implements RequestHandler<EditMovimientoCommand, String> {
     private IMovimientoRepository _movimientoRepository;
 
-    private ICuentaRepository _cuentaRepository;
+    private ICategoriaMovimientoRepository _categoriaMovimientoRepository;
+
+    private ISecurityUtils _securityUtils;
+
     private IUnitOfWork _unitOfWork;
 
     public EditMovimientoHandler(IMovimientoRepository _movimientoRepository,
-            ICuentaRepository _cuentaRepository, IUnitOfWork _unitOfWork) {
+            ICategoriaMovimientoRepository _categoriaMovimientoRepository, ISecurityUtils _securityUtils,
+            IUnitOfWork _unitOfWork) {
         this._movimientoRepository = _movimientoRepository;
-        this._cuentaRepository = _cuentaRepository;
+        this._categoriaMovimientoRepository = _categoriaMovimientoRepository;
+        this._securityUtils = _securityUtils;
         this._unitOfWork = _unitOfWork;
     }
 
     @Override
     public String handle(EditMovimientoCommand request) throws Exception {
-        User user;
 
         try {
-            user = User.decodeTokenWithUser(request.token);
+            _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }
@@ -40,8 +43,9 @@ public class EditMovimientoHandler implements RequestHandler<EditMovimientoComma
         }
 
         if (request.movimiento.keyCategoria != null) {
-            if (user.isCategoriaMovimientoUser(request.movimiento.keyCategoria)) {
+            if (_categoriaMovimientoRepository.FindByKey(request.movimiento.keyCategoria) == null) {
                 throw new HttpException(HttpStatus.BAD_REQUEST, "La categoría movimiento no pertenece al usuario");
+                // TODO Revisar esta validación
             }
             movimiento.KeyCategoria = request.movimiento.keyCategoria;
         }
@@ -50,35 +54,9 @@ public class EditMovimientoHandler implements RequestHandler<EditMovimientoComma
             movimiento.descripcion = request.movimiento.descripcion;
         }
 
-        Cuenta cuentaOrigen = _cuentaRepository.FindByKey(movimiento.keyCuentaOrigen);
-        Cuenta cuentaDestino = _cuentaRepository.FindByKey(movimiento.keyCuentaDestino);
-        double diferencia;
+        movimiento.eventEdit(movimiento.getKey(), movimiento.getMonto().getMonto(), request.movimiento.monto);
 
-        if (request.movimiento.monto > movimiento.getMonto().getMonto()) {
-            diferencia = request.movimiento.monto - movimiento.getMonto().getMonto();
-            if (cuentaOrigen.getMonto().getMonto() < diferencia) {
-                throw new HttpException(HttpStatus.BAD_REQUEST,
-                        "El monto a transferir es mayor al monto de la cuenta origen");
-            }
-            cuentaOrigen.getMonto().restar(diferencia);
-            cuentaDestino.getMonto().sumar(diferencia);
-        }
-
-        if (request.movimiento.monto < movimiento.getMonto().getMonto()) {
-            diferencia =  movimiento.getMonto().getMonto() - request.movimiento.monto ;
-            if (cuentaDestino.getMonto().getMonto() < diferencia) {
-                throw new HttpException(HttpStatus.BAD_REQUEST,
-                        "El monto a transferir es mayor al monto de la cuenta destino");
-            }
-            cuentaOrigen.getMonto().sumar(diferencia);
-            cuentaDestino.getMonto().restar(diferencia);
-        }
-
-        movimiento.monto = new Monto(request.movimiento.monto);
-
-        _cuentaRepository.Update(cuentaOrigen);
-        _cuentaRepository.Update(cuentaDestino);
-
+        movimiento.setMonto(new Monto(request.movimiento.monto));
         _movimientoRepository.Update(movimiento);
         _unitOfWork.commit();
 

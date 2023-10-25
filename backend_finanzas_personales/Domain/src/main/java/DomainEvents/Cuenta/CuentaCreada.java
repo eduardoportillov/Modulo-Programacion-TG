@@ -1,4 +1,4 @@
-package DomainEvents;
+package DomainEvents.Cuenta;
 
 import java.util.UUID;
 

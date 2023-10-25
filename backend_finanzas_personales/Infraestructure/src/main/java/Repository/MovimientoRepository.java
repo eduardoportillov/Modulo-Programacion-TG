@@ -3,12 +3,9 @@ package Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 import Context.IWriteDbContext;
-import Entities.User;
-import Entities.Cuenta.Cuenta;
-import Entities.Movimiento.Movimiento;
+import Entities.Cuenta;
+import Entities.Movimiento;
 import Fourteam.db.DbSet;
 import Fourteam.db.IDbSet.BooleanFunction;
 import Repositories.IMovimientoRepository;
@@ -75,12 +72,22 @@ public class MovimientoRepository implements IMovimientoRepository {
 
         for (Cuenta cuenta : dbSetCuenta.All()) {
             if (cuenta.getKeyUserTitular().equals(keyUser)) {
-                listMov.addAll(GetByCuenta(cuenta.key));
+                for (Movimiento movimiento : GetByCuenta(cuenta.key)) {
+
+                    if (movimiento.getKeyCuentaOrigen()!=null &&movimiento.getKeyCuentaOrigen().equals(cuenta.key)) {
+                        movimiento.getMonto().setMonto(movimiento.getMonto().getMonto() * -1);
+                    }
+
+                    if (movimiento.getKeyCuentaDestino()!=null &&movimiento.getKeyCuentaDestino().equals(cuenta.key)) {
+                        movimiento.getMonto().setMonto(movimiento.getMonto().getMonto());
+                    }
+
+                    listMov.add(movimiento);
+                }
             }
         }
 
         return listMov;
-
     }
 
 }

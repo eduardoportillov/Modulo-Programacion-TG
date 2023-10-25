@@ -2,25 +2,28 @@ package UseCases.Command.Cuenta.Eliminar;
 
 import java.util.UUID;
 
-import Entities.User;
-import Entities.Cuenta.Cuenta;
+import Entities.Cuenta;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
 import Repositories.ICuentaRepository;
+import Repositories.ISecurityUtils;
 
 public class EliminarCuentahandler implements RequestHandler<EliminarCuentaCommand, UUID> {
     ICuentaRepository _cuentaRepository;
 
-    public EliminarCuentahandler(ICuentaRepository _cuentaRepository) {
+    private ISecurityUtils _securityUtils;
+
+    public EliminarCuentahandler(ICuentaRepository _cuentaRepository, ISecurityUtils _securityUtils) {
         this._cuentaRepository = _cuentaRepository;
+        this._securityUtils = _securityUtils;
     }
 
     @Override
     public UUID handle(EliminarCuentaCommand request) throws Exception {
 
         try {
-            User.decodeTokenWithUser(request.token);
+            _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }

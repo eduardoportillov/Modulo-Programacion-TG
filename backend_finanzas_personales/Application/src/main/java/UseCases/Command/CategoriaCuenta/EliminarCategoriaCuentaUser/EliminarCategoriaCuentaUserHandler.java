@@ -1,41 +1,47 @@
 package UseCases.Command.CategoriaCuenta.EliminarCategoriaCuentaUser;
 
-import Entities.User;
+import java.util.UUID;
+
+import Entities.CategoriaCuenta;
 import Fourteam.http.HttpStatus;
 import Fourteam.http.Exception.HttpException;
 import Fourteam.mediator.RequestHandler;
+import Repositories.ICategoriaCuentaRepository;
+import Repositories.ISecurityUtils;
 import Repositories.IUnitOfWork;
-import Repositories.IUserRepository;
 
 public class EliminarCategoriaCuentaUserHandler implements RequestHandler<EliminarCategoriaCuentaUserCommand, String> {
-    IUserRepository _userRepository;
+    private ICategoriaCuentaRepository _categoriaCuentaRepository;
+
+    private ISecurityUtils _securityUtils;
+
     IUnitOfWork _unitOfWork;
 
-    public EliminarCategoriaCuentaUserHandler(IUserRepository userRepository) {
-        this._userRepository = userRepository;
+    public EliminarCategoriaCuentaUserHandler(ICategoriaCuentaRepository _categoriaCuentaRepository,
+            ISecurityUtils _securityUtils, IUnitOfWork _unitOfWork) {
+        this._categoriaCuentaRepository = _categoriaCuentaRepository;
+        this._securityUtils = _securityUtils;
+        this._unitOfWork = _unitOfWork;
     }
 
     @Override
     public String handle(EliminarCategoriaCuentaUserCommand request) throws Exception {
-        User user;
+        UUID keyUser;
         try {
-            user = User.decodeTokenWithUser(request.token);
+            keyUser = _securityUtils.decodeToken(request.token);
         } catch (Exception e) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Token Invalido o vencido");
         }
 
-        user = _userRepository.FindByKey(user.key);
+        CategoriaCuenta categoriaCuenta = _categoriaCuentaRepository.FindByKey(request.categoriacuenta.getKey());
 
-        if (user.isCategoriaCuentaUser(request.categoriacuenta.key)) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, "No se encontro la categoria");
+        if (categoriaCuenta.getKeyUser().equals(keyUser)) {
+            _categoriaCuentaRepository.Delete(categoriaCuenta);
+            _unitOfWork.commit();
+            return "Categoria Cuenta del User Eliminado con éxito";
+        } else {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "La Categoria Cuenta no pertenece al usuario");
         }
-
-        user.categoriaCuentaUser.removeIf(cc -> cc.key.toString().equals(request.categoriacuenta.key.toString()));
-
-        _userRepository.Update(user);
-
-        return "Categoria Usuario Eliminada con Exito";
-
     }
 
 }

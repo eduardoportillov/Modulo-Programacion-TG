@@ -1,0 +1,7 @@
+Controllers\CategoriaMovimientoController.class
+Controllers\UserController.class
+Controllers\MovimientosController.class
+App.class
+Controllers\CuentaController.class
+WebApi.class
+Controllers\CategoriaCuentaController.class

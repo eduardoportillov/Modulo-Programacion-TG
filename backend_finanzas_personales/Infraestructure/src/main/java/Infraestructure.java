@@ -2,6 +2,7 @@ import Context.IWriteDbContext;
 import Fourteam.extensions.IServiceCollection;
 import Repositories.*;
 import Repository.*;
+import Security.SecurityUtils;
 
 public class Infraestructure {
 
@@ -14,6 +15,8 @@ public class Infraestructure {
     IServiceCollection.AddScoped(ICategoriaCuentaRepository.class, CategoriaCuentaRepository.class);
     IServiceCollection.AddScoped(ICategoriaMovimientoRepository.class, CategoriaMovimientoRepository.class);
     IServiceCollection.AddScoped(IMovimientoRepository.class, MovimientoRepository.class);
+    IServiceCollection.AddScoped(ISecurityUtils.class, SecurityUtils.class);
+
     Application.AddApplication();
   }
 }

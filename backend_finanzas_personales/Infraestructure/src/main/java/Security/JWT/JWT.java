@@ -1,4 +1,4 @@
-package JWT;
+package Security.JWT;
 
 import java.util.Date;
 import java.util.Map;

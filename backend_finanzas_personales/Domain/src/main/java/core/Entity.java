@@ -19,6 +19,9 @@ public abstract class Entity<TId> {
   }
 
   public void addDomainEvent(DomainEvent event) {
+    if(domainEvents == null) {
+      domainEvents = new ArrayList<DomainEvent>();
+    }
     domainEvents.add(event);
   }
 
